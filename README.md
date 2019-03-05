@@ -85,16 +85,16 @@ Após configurar o `.htaccess` você poderá definir suas rotas no arquivo `inde
 	    echo "Primeiro projeto com a Ødin Framework!";
 	})->name("home");
 	//Rota POST
-	Routes::post("/", "Projeto\controller\Classe:metodo");
+	Routes::post("/", "Projeto\http\controllers\Classe:metodo");
 	//Rota PUT
-	Routes::put("/", "Projeto\controller\Classe:metodo");
+	Routes::put("/", "Projeto\http\controllers\Classe:metodo");
 	//Rota DELETE
-	Routes::delete("/", "Projeto\controller\Classe:metodo");
+	Routes::delete("/", "Projeto\http\controllers\Classe:metodo");
 
 	//Definindo um grupo de rotas
 	$instance = Routes::getInstance();
 	Routes::group("/grupo", function() use ($instance){
-	    Routes::get("/", "Projeto\controller\Classe:metodo");
+	    Routes::get("/", "Projeto\http\controller\sClasse:metodo");
 	});
 	
 	Routes::run();
@@ -110,13 +110,13 @@ Forma funcional:
     })
 Forma Orientada a Objetos:
 
-    Routes::get("/teste", "App\controller\Teste:olaMundo");
-Para a forma OO, você precisa ter criado uma classe dentro da pasta `controller` de acordo com o exemplo abaixo.
+    Routes::get("/teste", "App\http\controllers\Teste:olaMundo");
+Para a forma OO, você precisa ter criado uma classe dentro da pasta `controllers` de acordo com o exemplo abaixo.
 
     <?php
-    namespace App\controller; //O namespace master é o de sua preferencia
+    namespace App\http\controllers; //O namespace master é o de sua preferencia
     
-    use Odin\controller\Controller;
+    use Odin\http\controller\Controller;
 
     class Teste extends Controller
     {
@@ -128,7 +128,7 @@ Para a forma OO, você precisa ter criado uma classe dentro da pasta `controller
 ### Recuperando valores em rotas dinâmicas no Controller
 A Ødin também suporta rotas dinâmicas, ou seja, rotas que contém valores variáveis na estrutura, como no exemplo a seguir.
 
-    Routes::get("/filme/:categoria", "App\controller\Filmes:listarPelaCategoria");
+    Routes::get("/filme/:categoria", "App\http\controllers\Filmes:listarPelaCategoria");
 Para definir uma parte dinâmica em uma rota você deve utilizar `/:nomeDaVariavel`.
 Alguns exemplos de requisição para este tipo de rota seriam:
 
@@ -147,7 +147,7 @@ Para recuperar esse valor passado na rota e utilizá-lo em sua aplicação basta
         }
 Você também pode definir um padrão a ser passado às variáveis através de um regex, como no exemplo abaixo.
 
-    Routes::get("/filme/:id", "App\controller\Filmes:selecionarPeloId", ["id" => "[\d]{1,8}"]);
+    Routes::get("/filme/:id", "App\http\controllers\Filmes:selecionarPeloId", ["id" => "[\d]{1,8}"]);
 
 O regex irá forçar a valor a seguir o padrão, caso contrário, um erro será lançado.
 
@@ -155,7 +155,7 @@ O regex irá forçar a valor a seguir o padrão, caso contrário, um erro será 
 
 Você também pode fazer redirecionamento utilizando a nomenclatura de rotas. Como no exemplo a seguir.
 
-    Routes::get("/login", "App\controller\Login:view")->name("loginPage");
+    Routes::get("/login", "App\http\controllers\Login:view")->name("loginPage");
 
 Para fazer o redirecionamento basta usar a propriedade `router` no contexto.
 
@@ -171,7 +171,7 @@ Antes de renderizar views, você precisa configurar o seu `index.php`, definindo
 
     Routes::viewsFolder(Config::get("path_views"));
     
-    Routes::get("/login", "App\controller\Login:view");
+    Routes::get("/login", "App\http\controllers\Login:view");
 
 Dessa forma você estará informando onde o Controller deverá buscar pelas Views.
 
@@ -234,7 +234,7 @@ Você pode definir um arquivo como header e outro como footer para armazenar inf
     Routes::viewsFolder(Config::get("path_views"));
     Routes::setHF("header.php", "footer.php");
     
-    Routes::get("/login", "App\controller\Login:view");
+    Routes::get("/login", "App\http\controllers\Login:view");
 
 Caso você tenha alguma página que deve carregar um header e um footer específico, você poderá bloquear o carregamento dos arquivos padrão no Controller, como no exemplo abaixo.
 
@@ -315,7 +315,7 @@ Na view, você pode acessar esses objetos passados como dependencias da seguinte
 
 A Ødin também oferece suporte a Middlewares, de maneira bem prática e simples, como no exemplo a seguir.
 
-    namespace App\middleware;
+    namespace App\http\middlewares;
 
     use Odin\http\middleware\IMiddleware;
     use Odin\utils\superglobals\Session;
@@ -341,7 +341,7 @@ No `index.php` você define a lista de Middlewares através do método `add()`.
 	    new Auth()
     ]);
     
-    Routes::get("/home", "App\controller\Home:landing")->name("home");
+    Routes::get("/home", "App\http\controllers\Home:landing")->name("home");
 
 Você pode adicionar Middlewares a rotas, names e groups. Para adicionar uma Middleware a todas as rotas basta usar `["*"]`.
 
@@ -365,6 +365,60 @@ A classe `Odin\utils\FlashMessages` permite a você definir mensagens que se aut
 
 ### Superglobais
 
+O namespace `Odin\utils\superglobals` contém classes para manuseamento das superglobais nativas do PHP (`$_GET, $_POST, $_SERVER, $_SESSION, $_COOKIE e $_FILES`).
+
+Veja o exemplo abaixo.
+
+    use Odin\utils\superglobals\Post;
+    use Odin\utils\FlashMessages;
+    
+    class Teste extends Controller
+    {
+        public function autenticar()
+        {
+            $usuario = Post::get("usuario");
+            $senha = Post::get("senha");
+
+	        if($usuario === "user" && $senha === "pass")
+	        {
+	            FlashMessages::add("Sucesso", "Autenticação realizada com sucesso!");
+	            $this->router->redirectTo("home");
+	        }
+	        else
+	        {
+	            FlashMessages::add("Erro", "Não foi possível realizar a autenticação");
+	            $this->router->redirectTo("login");
+	        }
+        }
+    }
+
 ### Filtros de Dados
 
+A classe `Odin\utils\Filter` fornece uma série de métodos para a realização da filtragem de dados, sejam senhas, emails ou textos comuns.
+
+    use Odin\utils\Filter;
+    ...
+    public function filtrarDados()
+    {
+        $email = Filter::email(Post::get("email"));
+        $senha = Filter::clear(Post::get("senha"));
+
+	    var_dump(Filter::isValidEmail($email));
+    }
+
 ### Headers
+
+Você também pode gerenciar os Headers das suas requisições com a classe `Odin\http\server\Header`.
+
+    use Odin\http\server\Header;
+	...
+    public function getDataAsJSON()
+    {
+        Header::contentType("application/json");
+
+	    return [
+	        ["name" => "John", "age" => 20],
+	        ["name" => "Doe", "age" => 22]
+	    ];
+    }
+
