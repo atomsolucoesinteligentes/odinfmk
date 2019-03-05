@@ -76,8 +76,7 @@ class Mail
 
     /**
      * Envia o email
-     * @throws Exception
-     * @reurn void
+     * @reurn bool
      */
     public static function send()
      {
