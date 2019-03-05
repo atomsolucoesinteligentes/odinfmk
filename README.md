@@ -422,3 +422,17 @@ Você também pode gerenciar os Headers das suas requisições com a classe `Odi
 	    ];
     }
 
+### Enviando Emails
+
+Você pode enviar emails nativamente pela função `mail` de forma mais simples utilizando a classe `Odin\utils\Mail`, como mostra o exemplo.
+
+    public function enviarEmail()
+    {
+        Mail::from("sender@email.com.br");
+        Mail::write("to@email.com.br", "Teste de Envio de Email");
+        Mail::headers();
+        Mail::message("<b>Hey! Testando envio de email pela Ødin!</b>");
+
+	    echo (Mail::send() ? "Email enviado." : "Email não enviado.");
+    }
+
