@@ -19,14 +19,20 @@ Em seguida, na raiz do seu projeto, você deve definir a estrutura base do proje
 
     config/
        |-- app.ini
-    controller/
-       |-- Aqui ficarão seus controllers
-    model/
-       |-- entidades
-       |  |-- Aqui ficarão as entidades do seu banco de dados
-       |-- Aqui ficarão seus models
+    http/
+        controllers/
+           |-- Aqui ficarão seus Controllers
+        middlewares/
+           |-- Aqui ficarão seus Middlewares
+    database/
+        entities/
+           |-- Aqui ficarão as Entidades do seu banco de dados
+        models/
+           |-- Aqui ficarão seus Models
     views/
        |-- Aqui ficarão suas views
+    utils/
+       |-- Aqui ficarão suas classes de utilidades e seus Helpers
     .htaccess
 Vale ressaltar que a estrutura apresentada acima é apenas o modelo base padrão. Você pode criar suas pastas personalizadas além das mostradas acima.
 
@@ -46,10 +52,11 @@ Veja o seguinte modelo:
 
     [Project Settings]
     sgbd                 = mysql
+    environment	     = development
 
 
 ### Definindo as rotas da aplicação
-Antes de definir suas rotas você precisa configurar o .htaccess localizado na raiz do projeto. Ao abrir você encontrará a seguinte estrutura:
+Antes de definir suas rotas você precisa configurar o `.htaccess` localizado na raiz do projeto. Ao abrir você encontrará a seguinte estrutura:
 
     RewriteEngine On
     RewriteCond %{SCRIPT_FILENAME} !-f
