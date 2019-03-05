@@ -13,6 +13,8 @@
         "psr-4": {
             "Odin\\": "src/"
         }
+    },
+    "require": {
+        "php": "^7.1"
     }
-    "require": {}
 }
