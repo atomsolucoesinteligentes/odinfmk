@@ -23,11 +23,11 @@ final class Transaction
      * Abre uma transação e uma conexão com o sgbd
      * @param string $database = nome do bd
      */
-    public static function open($database)
+    public static function open()
     {
         //se não há conexão
         if (empty(self::$conn)) {
-            self::$conn = Connection::open($database);
+            self::$conn = Connection::open();
             self::$conn->beginTransaction();
         }
     }

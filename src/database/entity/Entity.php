@@ -4,15 +4,14 @@ namespace Odin\database\entity;
 
 use Odin\database\entity\IGenericTypes;
 use Odin\database\entity\Mapper;
-use Odin\database\Database;
-use Odin\database\SqlQuery;
+use Odin\database\{ORMMapper};
 
 /**
  * Define e gerencia a estrutura das entidades
  *
  * @author Edney Mesquita
  */
-abstract class Entity extends Database implements IGenericTypes
+abstract class Entity extends ORMMapper implements IGenericTypes
 {
     /**
      * @var object $tableMap : Mapa estrutural da tabela referenciada no banco de dados
@@ -22,7 +21,13 @@ abstract class Entity extends Database implements IGenericTypes
     /**
      * @var string $tableName : Nome da tabela a ser referenciada
      */
-    protected $tableName;
+    public $tableName;
+
+    public function __construct()
+    {
+        parent::__construct();
+        parent::setTableName($this->tableName);
+    }
 
     /**
      * Define o mapa estrutural e o nome da tabela a ser referenciada no banco de dados
@@ -31,7 +36,6 @@ abstract class Entity extends Database implements IGenericTypes
      */
     public function map(array $map)
     {
-        $this->tableName = strtolower(@end(explode("\\", get_class($this))));
         $this->tableMap = Mapper::generate($map);
     }
 
@@ -51,65 +55,5 @@ abstract class Entity extends Database implements IGenericTypes
         if($this->tableMap->{$key}){
             $this->tableMap->{$key}->value = $value;
         }
-    }
-
-    /**
-     * Realiza as verificações das colunas da tabela e a geração de uma estrutura de dados e a encaminha para a inserção
-     * @return void
-     */
-    public function save()
-    {
-        $dataArray = [];
-        foreach($this->tableMap as $key => $column)
-        {
-            if($column->isPK() && $column->isAutoIncrement()){
-                continue;
-            }else if($column->isPK() && !$column->isAutoIncrement()){
-                $dataArray[$key] = $column->value;
-            }else{
-                if(!$column->allowNull()){
-                    if(isset($column->value)){
-                        $dataArray[$key] = $column->value;
-                    }else{
-                        die("Erro ao atribuir vazio ao campo {$key} que está definido como NOT NULL");
-                    }
-                }else{
-                    $dataArray[$key] = isset($column->value) ? $column->value : "NULL";
-                }
-            }
-        }
-        return $this->build(SqlQuery::insert($this->tableName, $dataArray));
-    }
-
-    /**
-     * Realiza a leitura e o retorno dos dados de uma entidade
-     * @return void
-     */
-    public function read()
-    {
-
-    }
-
-    /**
-     * Realiza verificações nas propriedades da entidade e a geração de uma estrutura de dados e a encaminha para a atualização
-     * @return void
-     */
-    public function change()
-    {
-
-    }
-
-    /**
-     * Realiza a remoção dos dados de uma determinada entidade
-     * @return void
-     */
-    public function remove()
-    {
-
-    }
-
-    public function build(string $sql)
-    {
-        echo $sql;
     }
 }
