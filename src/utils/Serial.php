@@ -6,6 +6,8 @@ final class Serial
 {
     public static function validate()
     {
+        if(empty(ODIN_SERIAL))
+            die("Serial não informada");
         $serial = ODIN_SERIAL;
         if($serial !== false){
             $c = sscanf($serial, '%4s-%4s-%4s-%4s');

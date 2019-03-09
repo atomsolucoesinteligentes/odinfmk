@@ -24,11 +24,14 @@ class Config
      */
     public static function init(string $projectFolder = "")
     {
+        if(empty(ODIN_ROOT))
+            die("Serial não informada");
         $root = ODIN_ROOT;
         if (file_exists($root . '/' . $projectFolder . '/config/app.ini')) {
             self::$data = (object) parse_ini_file($root . '/' . $projectFolder . '/config/app.ini');
         } else {
             Errors::throwError("Arquivo não encontrado!", "Arquivo de configurações app.ini não encontrado.", "inifile");
+            die();
         }
     }
 
@@ -44,6 +47,7 @@ class Config
             return self::$data->$property;
         } else {
             Errors::throwError("Propriedade Indefinida!", "A propriedade chamada [{$property}] não existe.", "bug");
+            die();
         }
     }
 
