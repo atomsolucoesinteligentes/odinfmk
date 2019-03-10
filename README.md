@@ -25,8 +25,6 @@ Em seguida, na raiz do seu projeto, você deve definir a estrutura base do proje
         middlewares/
            |-- Aqui ficarão seus Middlewares
     database/
-        entities/
-           |-- Aqui ficarão as Entidades do seu banco de dados
         models/
            |-- Aqui ficarão seus Models
     views/
@@ -344,6 +342,120 @@ No `index.php` você define a lista de Middlewares através do método `add()`.
     Routes::get("/home", "App\http\controllers\Home:landing")->name("home");
 
 Você pode adicionar Middlewares a rotas, names e groups. Para adicionar uma Middleware a todas as rotas basta usar `["*"]`.
+
+## Models
+
+### CRUD
+
+Para utilizar Models em seu projeto, basta criar uma classe na pasta `database/models` e atribuir a ela a seguinte estrutura.
+
+    namespace App\database\models;
+    
+    use Odin\database\orm\ORMMapper;
+    
+    class SimpleModel extends ORMMapper
+    {
+	    private $tableName = "teste";
+	    
+	    public function __construct()
+	    {
+		parent::__construct();
+		parent::setTableName($this->tableName);
+	    }
+    }
+
+#### Select
+Recuperando todos os registros existentes na tabela
+
+    use App\database\models\SimpleModel;
+    
+    $model = new SimpleModel();
+    
+    var_dump($model->findAll());
+
+Recuperando um registro pelo `id`
+
+    $model->findById(10);
+
+
+Recuperendo registros com a claúsula `WHERE`
+
+    $model->where(["id" => 10], ">")->get(); // id > 10
+    
+    $model->where(["id" => [10, 20]], "BETWEEN")->get(); // id BETWEEN 10 AND 20
+    $model->where(["id" => [10, 20]], "NOT BETWEEN")->get(); // id NOT BETWEEN 10 AND 20 
+    
+    $model->where(["name" => "User"], "LIKE")->get(); // name LIKE '%User%'
+    $model->where(["name" => "user"], "LIKE_L")->get(); // name LIKE '%User'
+    $model->where(["name" => "user"], "LIKE_R")->get(); // name LIKE 'User%'
+    
+    $model->where(["id" => [1, 2, 3, 4, 5]], "IN")->get(); // id IN (1,2,3,4,5)
+    $model->where(["id" => [1, 2, 3, 4, 5]], "NOT IN")->get(); // id NOT IN (1,2,3,4,5)
+    
+    $model->where(["id" => "NULL"], "IS")->get(); // id IS NULL
+
+Recuperando campos específicos com `get()`
+
+    $model->where(["id" => 10], "<=")->get("id, name, age");
+
+Ordenando registros com `ORDER BY`
+
+    $model->where(...)->orderBy("id", "ASC")->get();
+Agrupando registros
+
+    $model->where(...)->groupBy("id")->get();
+    
+    $model->where(...)->groupBy("id")->having(...)->get();
+
+#### Insert
+Para inserir registros, basta você adicionar novas propriedades ao objeto do Model e usar o método `save()`.
+
+    $model->name = "New User";
+    $model->email = "user@email.com";
+    $model->age = 20;
+    
+    $model->save();
+    
+O método save deve retornar um `PDOStatement` em caso de sucesso, ou `false` em caso de falha ao inserir o novo registro.
+
+#### Update
+Para realizar um update, você vai utilizar a mesma estrutura do insert, contudo, o `id` deverá ser informado. Ele é a chave para a diferenciação de comando INSERT de um UPDATE.
+
+    $model->id = 25;
+    $model->name = "Name Updated";
+    
+    $model->save();
+
+#### Delete
+Para realizar um DELETE você deverá primeiro recuperar o registro que deseja excluir e usar o método `remove()`. Como no exemplo abaixo.
+
+    $model->findById(10)->remove();
+
+### Joins
+Você pode adicionar Alias às tabelas para facilitar seu uso, como no exemplo a seguir.
+
+    class SimpleModel extends ORMMapper
+    {
+       private $tableName = "teste";
+       private $tableAlias = "t";
+    	    
+       public function __construct()
+       {
+    	parent::__construct();
+    	parent::setTableName($this->tableName, $this->tableAlias);
+       }
+    }
+
+E usá-lo da seguinte forma
+
+    $model->innerJoin("another a")->on("a.id = t.fk")->get();
+    $model->leftJoin("another a")->on("a.id = t.fk")->get();
+    $model->rightJoin("another a")->on("a.id = t.fk")->get();
+
+    $model->innerJoin("another a")
+		->on("a.id = t.fk")
+		->where(["id" => 10], ">=")
+		->get();
 
 ## Utilidades
 
