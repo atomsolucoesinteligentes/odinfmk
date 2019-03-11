@@ -3,7 +3,6 @@
 namespace Odin\view;
 
 use Odin\http\controller\IController;
-use Odin\utils\Functions;
 
 trait View
 {
