@@ -35,7 +35,7 @@ Em seguida, na raiz do seu projeto, você deve definir a estrutura base do proje
 Vale ressaltar que a estrutura apresentada acima é apenas o modelo base padrão. Você pode criar suas pastas personalizadas além das mostradas acima.
 
 ### Definindo as configurações do projeto
-Na pasta de `config`, você deverá criar um arquivo chamado `app.ini`. Este será o arquivo de configurações do projeto. Nele será definido o ambiente, o SGBD, os diretórios e url de acesso do projeto.
+Na pasta de `config`, você deverá criar um arquivo chamado `.env`. Este será o arquivo de configurações do projeto. Nele será definido o ambiente, o SGBD, os diretórios e url de acesso do projeto.
 Veja o seguinte modelo:
 
     ENVIRONMENT     = dev
@@ -335,6 +335,9 @@ Você pode adicionar Middlewares a rotas, names e groups. Para adicionar uma Mid
 ## Models
 
 ### CRUD
+
+Antes de começar a usar os Models em seu projeto, certifique-se de que está definida a diretiva `DRIVER` em `config/.env` , e, se há um arquivo com os dados da conexão na mesma pasta.
+Ex: `config/mysql.env` ou `config/pgsql.env`
 
 Para utilizar Models em seu projeto, basta criar uma classe na pasta `database/models` e atribuir a ela a seguinte estrutura.
 
