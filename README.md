@@ -18,7 +18,7 @@ Primeiramente você deve definir as constantes `ODIN_SERIAL` e `ODIN_ROOT` no ar
 Em seguida, na raiz do seu projeto, você deve definir a estrutura base do projeto.
 
     config/
-       |-- app.ini
+       |-- .env
     http/
         controllers/
            |-- Aqui ficarão seus Controllers
@@ -38,19 +38,12 @@ Vale ressaltar que a estrutura apresentada acima é apenas o modelo base padrão
 Na pasta de `config`, você deverá criar um arquivo chamado `app.ini`. Este será o arquivo de configurações do projeto. Nele será definido o ambiente, o SGBD, os diretórios e url de acesso do projeto.
 Veja o seguinte modelo:
 
-    [Physical Location]
-    path                 = /var/www/html/projeto/
-    path_views           = /var/www/html/projeto/views/
-    path_files           = /var/www/html/projeto/templates/assets/
-
-    [Remote Location]
-    remote_path          = http://localhost/projeto/
-    remote_views         = http://localhost/projeto/views/
-    remote_files         = http://localhost/projetos/templates/assets/
-
-    [Project Settings]
-    sgbd                 = mysql
-    environment	     = development
+    ENVIRONMENT     = dev
+    DRIVER          = mysql
+    SOURCE_DIR      = src/
+    HTTP_ROOT	= http://localhost:8080
+    HTTP_ROOT_FILES = http://localhost:8080/assets/ 
+    
 
 
 ### Definindo as rotas da aplicação
@@ -61,7 +54,7 @@ Antes de definir suas rotas você precisa configurar o `.htaccess` localizado na
     RewriteCond %{SCRIPT_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [QSA,L]
 
-    ErrorDocument 403 PÁGINA DE ERRO 403
+    ErrorDocument 403 http://localhost/pagina/de/erro/403
     Options All -Indexes
 Você pode definir uma página para tratamento dos erros 403, que são lançados quando o usuário tenta acessar pastas proibidas. Por padrão, todas as pastas da aplicação têm o acesso proibido a abertura via HTTP.
 
@@ -162,16 +155,13 @@ Para fazer o redirecionamento basta usar a propriedade `router` no contexto.
 ### Utilizando Views
 Como qualquer aplicação MVC, você poderá usar suas views para renderizar elementos visuais, como formulários, listas, etc.
 Na Ødin, as views são renderizadas a partir do Controller, mais especificamente dentro do método acionado ao acessar a rota.
-Antes de renderizar views, você precisa configurar o seu `index.php`, definindo a pasta onde o Controller deverá buscar pelas Views. 
 
     Config::init("projeto");
     Routes::init();
-
-    Routes::viewsFolder(Config::get("path_views"));
     
     Routes::get("/login", "App\http\controllers\Login:view");
 
-Dessa forma você estará informando onde o Controller deverá buscar pelas Views.
+O Controller buscará pelas Views na pasta `projeto/source/views`.
 
 Para renderizar a view, basta seguir o modelo a baixo.
 
@@ -228,8 +218,7 @@ Você pode definir um arquivo como header e outro como footer para armazenar inf
 
     Config::init("projeto");
     Routes::init();
-
-    Routes::viewsFolder(Config::get("path_views"));
+    
     Routes::setHF("header.php", "footer.php");
     
     Routes::get("/login", "App\http\controllers\Login:view");
