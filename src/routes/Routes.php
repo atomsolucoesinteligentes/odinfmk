@@ -4,6 +4,7 @@ namespace Odin\routes;
 
 use Odin\App;
 use Odin\routes\AppContext;
+use Odin\utils\Config;
 
 class Routes
 {
@@ -44,8 +45,9 @@ class Routes
         return AppContext::getInstance()->delete($pattern, $callable, $conditions);
     }
 
-    public static function viewsFolder(string $folder)
+    public static function viewsFolder()
     {
+        $folder = Config::get("SOURCE_DIR") . "views/";
         AppContext::getInstance()->render->setViewsFolder($folder);
     }
 

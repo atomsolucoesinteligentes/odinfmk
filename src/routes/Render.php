@@ -5,7 +5,9 @@
  */
 namespace Odin\routes;
 
-class Render 
+use Odin\utils\Config;
+
+class Render
 {
 
     /**
@@ -29,12 +31,17 @@ class Render
         'footer' => ''
     ];
 
+    public function __construct()
+    {
+        $this->viewsFolder = ODIN_ROOT ."/". Config::get("SOURCE_DIR")."views/";
+    }
+
     /**
      * Define qual o arquivo de header e qual o arquivo de footer do template
      * @param string $header
      * @param string $footer
      */
-    public function setHf($header, $footer) 
+    public function setHf($header, $footer)
     {
         $this->hf['header'] = $header;
         $this->hf['footer'] = $footer;
@@ -45,7 +52,7 @@ class Render
      * no momento do extract
      * @param array $data
      */
-    public function setAsGlobal(array $data) 
+    public function setAsGlobal(array $data)
     {
         $glob = $this->getGlobals();
         if (!empty($glob)) {
@@ -59,7 +66,7 @@ class Render
      * Retorna o array de globais
      * @return array
      */
-    public function getGlobals() 
+    public function getGlobals()
     {
         return $this->globals;
     }
@@ -68,7 +75,7 @@ class Render
      * Seta a pasta de viewss
      * @param string $viewsFolder
      */
-    public function setViewsFolder($viewsFolder) 
+    public function setViewsFolder($viewsFolder)
     {
         $this->viewsFolder = $viewsFolder;
     }
@@ -78,7 +85,7 @@ class Render
      * @param string $fileName
      * @param array $data
      */
-    public function load($fileName, $data, $hf = true) 
+    public function load($fileName, $data, $hf = true)
     {
         if (empty($this->viewsFolder)) {
             \Odin\utils\Errors::throwError('Oops...', 'A pasta de views não foi definida!', 'folderundefined');
@@ -98,10 +105,13 @@ class Render
             if ($hf === true && $this->hf['footer'] != '') {
                 include_once $this->viewsFolder . $this->hf['footer'];
             }
+        }else{
+            \Odin\utils\Errors::throwError('Oops...', 'O arquivo informado parece não existir!', 'folderundefined');
+            die();
         }
     }
 
-    public function renderNotFoundPage() 
+    public function renderNotFoundPage()
     {
         \Odin\utils\Errors::throwError('Página não encontrada', 'A página que você procura não está aqui, verifique a url!', 'notfound');
     }

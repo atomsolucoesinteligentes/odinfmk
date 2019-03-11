@@ -2,7 +2,7 @@
 
 namespace Odin\utils;
 
-use Odin\utils\Errors;
+use Odin\utils\{Errors, Parse};
 
 /**
  * Gerencia configurações da aplicação
@@ -26,11 +26,15 @@ class Config
     {
         if(empty(ODIN_ROOT))
             die("Serial não informada");
+
         $root = ODIN_ROOT;
-        if (file_exists($root . '/' . $projectFolder . '/config/app.ini')) {
-            self::$data = (object) parse_ini_file($root . '/' . $projectFolder . '/config/app.ini');
-        } else {
-            Errors::throwError("Arquivo não encontrado!", "Arquivo de configurações app.ini não encontrado.", "inifile");
+        $envFile = "{$root}/{$projectFolder}/config/.env";
+
+        if(file_exists($envFile)){
+            self::$data = Parse::env($envFile, true);
+            self::exportEnv();
+        }else{
+            Errors::throwError("Arquivo não encontrado!", "Arquivo de configurações .env não encontrado.", "bug");
             die();
         }
     }
@@ -48,6 +52,14 @@ class Config
         } else {
             Errors::throwError("Propriedade Indefinida!", "A propriedade chamada [{$property}] não existe.", "bug");
             die();
+        }
+    }
+
+    public static function exportEnv()
+    {
+        foreach(self::$data as $var => $value)
+        {
+            define($var, $value);
         }
     }
 

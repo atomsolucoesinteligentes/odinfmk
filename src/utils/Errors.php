@@ -2,9 +2,6 @@
 
 namespace Odin\utils;
 
-use Odin\utils\Logger;
-use Odin\utils\Config;
-
 class Errors
 {
 
@@ -64,7 +61,6 @@ class Errors
 
     public static function throwError($title, $errortext, $type)
     {
-        self::writeLogs("EXCEPTIONS", $errortext);
         self::$body = "<div class=\"content\">
                       <div class=\"iconarea\">
                           <img src=\"" . self::selectErrorIcon($type) . "\">
@@ -87,27 +83,10 @@ class Errors
                       <h1>{$title}</h1>";
         foreach ($errors as $erro)
         {
-            self::writeLogs("EXCEPTIONS", $erro);
             self::$body .= "<p>$erro</p>";
         }
         self::$body .= "</div>";
 
         self::mount();
     }
-
-    private static function getPath()
-    {
-        $path = Config::get('remote_path');
-        return $path;
-    }
-
-    private static function writeLogs(string $file, string $content)
-    {
-        if (Config::get('log_files')) {
-            $logger = new Logger();
-            $logger->open($file);
-            $logger->write($content);
-        }
-    }
-
 }

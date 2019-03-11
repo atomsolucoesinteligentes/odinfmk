@@ -4,19 +4,23 @@ namespace Odin\database\orm;
 
 use \PDO;
 use Odin\database\orm\IDatabase;
+use Odin\utils\Parse;
 
 class Adapter implements IDatabase
 {
 
     private $connection;
 
+    private $driver;
+
     public function __construct()
     {
+        $this->driver = Parse::env(ODIN_ROOT."/".SOURCE_DIR."config/".DRIVER.".env", true);
     }
 
     public function connect()
     {
-        $this->connection = new \PDO("mysql:host=186.202.152.175;port=3306;dbname=atomsigea", "atomsigea", "dbsigea");
+        $this->connection = new \PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}", $this->driver->USERNAME, $this->driver->PASSWORD);
         return !empty($this->connection);
     }
 
