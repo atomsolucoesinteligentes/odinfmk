@@ -207,9 +207,8 @@ class ORMMapper implements IMapper
         $limit = $this->_limit;
         $joins = (empty($joins) ? "" : $joins);
         $query = "SELECT {$columns} FROM {$this->_tableName} {$this->_tableAlias} {$joins} {$where} {$agreg} {$limit}";
-        echo $query;
-        // $result = $this->_adapter->query($query);
-        // return $this->generateCollection($result);
+        $result = $this->_adapter->query($query);
+        return $this->generateCollection($result);
     }
 
     protected function generateWS()
