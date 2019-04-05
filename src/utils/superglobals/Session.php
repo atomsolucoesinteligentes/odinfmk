@@ -10,7 +10,9 @@ namespace Odin\utils\superglobals;
 class Session
 {
 
-    private function __construct() {}
+    public function __construct() {
+        self::init();
+    }
 
     private static function init()
     {
