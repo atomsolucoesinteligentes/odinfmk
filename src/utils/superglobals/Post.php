@@ -74,7 +74,7 @@ class Post
      */
     public static function forget($name)
     {
-        $this->put($name, "");
+        self::put($name, "");
     }
 
     /**
@@ -117,8 +117,8 @@ class Post
      */
     public static function pull($name)
     {
-        $this->get($name);
-        $this->forget($name);
+        self::get($name);
+        self::forget($name);
     }
 
 }

@@ -68,7 +68,7 @@ class Server
      */
     public static function forget($name)
     {
-        $this->put($name, '');
+        self::put($name, '');
     }
 
     /**

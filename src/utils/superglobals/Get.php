@@ -57,7 +57,7 @@ class Get
      */
     public static function forget($name)
     {
-        $this->put($name, "");
+        self::put($name, "");
     }
 
     /**
@@ -100,8 +100,8 @@ class Get
      */
     public static function pull($name)
     {
-        $this->get($name);
-        $this->forget($name);
+        self::get($name);
+        self::forget($name);
     }
 
 }
