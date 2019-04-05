@@ -5,25 +5,25 @@ namespace Easy\utils;
 use Easy\utils\Config;
 
 /**
- * Gerencia as operações com o banco de dados
- * @version 1.0.9
- * @package Easy\utils
- * @author Edney Mesquita
+ * Gerencia os Loggers das aplicações
  */
 class Logger {
 
     /**
-     * @var $filename string nome do arquivo do log
-     * @var $basedir string diretório padrão do arquivo
+     * @var string $filename
      */
     private $filename;
+
+    /**
+     * @var string $basedir
+     */
     private $basedir;
 
     /**
      * Configura o $basedir (Diretório padrão)
      */
     public function __construct() {
-        $this->basedir = Config::get('log_files_path');
+        $this->basedir = Config::get('LOGS_PATH');
     }
 
     /**
@@ -46,5 +46,4 @@ class Logger {
         fwrite($handler, $text);
         fclose($handler);
     }
-
 }
