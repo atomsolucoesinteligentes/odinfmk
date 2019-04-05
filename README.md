@@ -43,6 +43,7 @@ Veja o seguinte modelo:
     SOURCE_DIR      = src/
     HTTP_ROOT	= http://localhost:8080
     HTTP_ROOT_FILES = http://localhost:8080/assets/ 
+    LOGS_PATH	= src/logs
     
 
 
