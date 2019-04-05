@@ -22,7 +22,7 @@ class Parse
         {
             if(!empty(trim($line)) && strpos(trim($line), "#") === false){
                 $lineq = explode("=", $line);
-                $parsed->{$lineq[0]} = trim($lineq[1]);
+                $parsed->{trim($lineq[0])} = trim($lineq[1]);
             }
         }
         return $parsed;
