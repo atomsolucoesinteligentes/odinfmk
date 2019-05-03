@@ -31,7 +31,6 @@ class FlashMessages
 
     public static function get($key)
     {
-        self::init();
         if(self::has($key)){
             return self::$previous[$key];
         }
@@ -40,7 +39,6 @@ class FlashMessages
 
     public static function has($key)
     {
-        self::init();
         return isset(self::$previous[$key]);
     }
 }
