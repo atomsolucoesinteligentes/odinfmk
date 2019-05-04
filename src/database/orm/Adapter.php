@@ -41,7 +41,7 @@ class Adapter implements IDatabase
     {
         $valuesstr = [];
         $columns = [];
-        foreach(array_slice($values, 11) as $key => $value)
+        foreach(array_slice($values, 10) as $key => $value)
         {
             $columns[] = $key;
             $valuesstr[] = $this->typeFormat($value);
@@ -143,7 +143,7 @@ class Adapter implements IDatabase
     public function generateUpdateString($values)
     {
         $buildString = [];
-        foreach(array_slice($values, 11) as $key => $value)
+        foreach(array_slice($values, 10) as $key => $value)
         {
             $buildString[] = "`{$key}` = {$this->typeFormat($value)}";
         }
