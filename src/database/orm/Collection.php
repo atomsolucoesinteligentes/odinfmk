@@ -15,9 +15,9 @@ class Collection
     {
         $mapper = new ORMMapper();
         if($conditions){
-            $mapper->remove($this->_tn, $conditions);
+            return $mapper->remove($this->_tn, $conditions);
         }else{
-            $mapper->remove($this->_tn, ['id' => ['=', $this->id, '']]);
+            return $mapper->remove($this->_tn, ['id' => ['=', $this->id, '']]);
         }
     }
 }
