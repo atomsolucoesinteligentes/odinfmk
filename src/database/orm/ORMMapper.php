@@ -184,7 +184,7 @@ class ORMMapper implements IMapper
         return $this;
     }
 
-    public function get($columns = "*")
+    public function get($columns = "*", $showSql = false)
     {
         $joins = [];
         if(!empty($this->_joins) && !empty($this->_joinsOn)){
@@ -207,6 +207,7 @@ class ORMMapper implements IMapper
         $limit = $this->_limit;
         $joins = (empty($joins) ? "" : $joins);
         $query = "SELECT {$columns} FROM {$this->_tableName} {$this->_tableAlias} {$joins} {$where} {$agreg} {$limit}";
+        if($showSql) echo $query;
         $result = $this->_adapter->query($query);
         return $this->generateCollection($result);
     }
