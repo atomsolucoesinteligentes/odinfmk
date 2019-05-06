@@ -1,22 +1,14 @@
 <?php
 
-/**
- * Gerencia os arquivos
- * @info Easy Framework
- * @version 1.1.6
- * @author Edney Mesquita
- * @package Easy\utils\superglobals
- */
+namespace Odin\utils\superglobals;
 
-namespace Easy\utils\superglobals;
-
-use Easy\utils\superglobals\ISuperGlobals;
-
-class Files implements ISuperGlobals {
+class Files 
+{
 
     private $file;
     
-    public function __construct() {
+    public function __construct() 
+    {
         $this->file = $_FILES;
     }
 
@@ -25,7 +17,8 @@ class Files implements ISuperGlobals {
      * @param string $name
      * @return string
      */
-    public function get($name){
+    public function get($name)
+    {
         return $this->file[$name];
     }
 
@@ -36,7 +29,8 @@ class Files implements ISuperGlobals {
      * @param $value
      * @return void
      */
-    public function put($name, $value) {
+    public function put($name, $value) 
+    {
         $this->file[$name] = $value;
     }
 
@@ -44,7 +38,8 @@ class Files implements ISuperGlobals {
      * Retorna todas as propriedades
      * @return array
      */
-    public function all() {
+    public function all() 
+    {
         return $this->file;
     }
 
@@ -53,7 +48,8 @@ class Files implements ISuperGlobals {
      * @param string $name
      * @return boolean
      */
-    public function exists($name) {
+    public function exists($name) 
+    {
         return isset($this->file[$name]);
     }
 
@@ -63,7 +59,8 @@ class Files implements ISuperGlobals {
      * @param string $value
      * @return boolean
      */
-    public function equals($name, $value) {
+    public function equals($name, $value) 
+    {
         return ($this->file[$name] === $value);
     }
 
@@ -72,7 +69,8 @@ class Files implements ISuperGlobals {
      * @param string $name
      * @return void
      */
-    public function forget($name) {
+    public function forget($name) 
+    {
         $this->put($name, "");
     }
 
@@ -80,8 +78,8 @@ class Files implements ISuperGlobals {
      * Apaga todas as propriedades
      * @return void
      */
-    public function flush() {
+    public function flush() 
+    {
         $this->file = [];
     }
 }
-?>
