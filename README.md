@@ -5,6 +5,8 @@
 
 # Documentação
 
+ - Instalação{ds}
+
 ## Instalação
 Instale a Ødin através do Composer.
 > composer require atomdev/odinfmk
@@ -43,7 +45,6 @@ Veja o seguinte modelo:
     SOURCE_DIR      = src/
     HTTP_ROOT	= http://localhost:8080
     HTTP_ROOT_FILES = http://localhost:8080/assets/ 
-    LOGS_PATH	= src/logs
     
 
 
@@ -339,6 +340,13 @@ Você pode adicionar Middlewares a rotas, names e groups. Para adicionar uma Mid
 
 Antes de começar a usar os Models em seu projeto, certifique-se de que está definida a diretiva `DRIVER` em `config/.env` , e, se há um arquivo com os dados da conexão na mesma pasta.
 Ex: `config/mysql.env` ou `config/pgsql.env`
+
+    DRIVER          = mysql
+    HOST            = 127.0.0.1
+    USERNAME        = root
+    PASSWORD        = root
+    PORT            = 3306
+    SCHEMA          = dbname
 
 Para utilizar Models em seu projeto, basta criar uma classe na pasta `database/models` e atribuir a ela a seguinte estrutura.
 
