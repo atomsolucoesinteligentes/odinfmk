@@ -10,7 +10,7 @@ class Parse
         if($asArray){
             return file($path);
         }else{
-            return file_get_content($path);
+            return file_get_contents($path);
         }
     }
 
