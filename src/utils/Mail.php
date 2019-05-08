@@ -51,11 +51,12 @@ class Mail
      */
     public static function headers($configs = null)
     {
+        $origin = self::$origin;
         self::$headers = "MIME-Version: 1.1\n";
         self::$headers .= "Content-type: text/html; charset=iso-8859-1\n";
-        self::$headers .= "From: <{self::$origin}>\n";
-        self::$headers .= "Return-Path: <{self::$origin}>\n";
-        self::$headers .= "Reply-to: <{self::$origin}>\n";
+        self::$headers .= "From: <{$origin}>\n";
+        self::$headers .= "Return-Path: <{$origin}>\n";
+        self::$headers .= "Reply-to: <{$origin}>\n";
         if ($configs) {
             foreach ($configs as $config)
             {
