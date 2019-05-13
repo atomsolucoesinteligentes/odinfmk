@@ -4,11 +4,12 @@ namespace Odin\utils;
 
 final class Serial
 {
-    public static function validate()
+    public static function validate($serial = "")
     {
         if(empty(ODIN_SERIAL))
             die("Serial não informada");
-        $serial = ODIN_SERIAL;
+        if(empty($serial))
+            $serial = ODIN_SERIAL;
         if($serial !== false){
             $c = sscanf($serial, '%4s-%4s-%4s-%4s');
             $d = 1;
