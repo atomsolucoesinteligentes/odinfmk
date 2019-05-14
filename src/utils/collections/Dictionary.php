@@ -64,6 +64,11 @@ class Dictionary
         unset($this->dict[$key]);
     }
     
+    public function size(): int
+    {
+        return count($this->dict);
+    }
+    
     public function toJson()
     {
         return json_encode($this->dict, JSON_UNESCAPED_UNICODE);
