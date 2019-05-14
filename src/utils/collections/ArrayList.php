@@ -2,7 +2,7 @@
 
 namespace Odin\utils\collections;
 
-class ArrayList 
+class ArrayList
 {
     
     protected $list;
