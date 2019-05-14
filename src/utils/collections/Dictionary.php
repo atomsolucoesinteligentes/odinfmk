@@ -19,11 +19,11 @@ class Dictionary
     {
         if($key !== null && gettype($key) != $this->keyType)
             die("Tipo da chave inválido");
-        if($value !== null && !$value instanceof $this->keyType)
+        if($value !== null && !$value instanceof $this->valueType)
             die("Tipo do valor inválido");
     }
     
-    public function add(string $key, string $value)
+    public function add(string $key, object $value)
     {
         $this->checkType($key, $value);
         $this->dict[$key] = $value;
