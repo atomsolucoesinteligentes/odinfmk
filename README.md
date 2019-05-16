@@ -44,6 +44,7 @@ Veja o seguinte modelo:
     HTTP_ROOT	= http://localhost:8080
     HTTP_ROOT_FILES = http://localhost:8080/assets/ 
     
+   Você pode utilizar de dois ambientes Desenvolvimento e Produção utilizando a constante `ODIN_ENV` junto de `ODIN_ROOT` e `ODIN_PATH`, ao definir como `dev` um arquivo chamado dev.env deverá ser criado na pasta de configurações com as diretivas de desenvolvimento enquanto o .env passa a ser as diretivas de produção.
 
 
 ### Definindo as rotas da aplicação
