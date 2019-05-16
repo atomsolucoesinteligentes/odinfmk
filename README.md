@@ -5,8 +5,6 @@
 
 # Documentação
 
- - Instalação{ds}
-
 ## Instalação
 Instale a Ødin através do Composer.
 > composer require atomdev/odinfmk
@@ -548,4 +546,58 @@ Você pode enviar emails nativamente pela função `mail` de forma mais simples 
 
 	    echo (Mail::send() ? "Email enviado." : "Email não enviado.");
     }
+
+### Collections
+As Collections são classes que implementam estruturas de dados baseadas em linguagens fortemente tipadas como Java e C#, e foram implementas para facilitar a manipulação de arrays de objetos, ou seja, todas as Collections contidas em `Odin\utils\collections` devem ser utilizadas com objetos.
+Nesta versão da Ødin, há 3 Collections implementadas, são elas: `ArrayList`, `Dictionary` e `Queue`.
+
+#### ArrayList
+O ArrayList agrupa vários objetos como se fosse um array de chaves numéricas, como no exemplo abaixo, entretanto de forma orientada a objetos e mais organizada e fácil de manipular.
+
+    $array = [
+        0 => new Usuario()
+    ];
+
+Usando o ArrayList:
+
+    use App\classes\Usuario;
+    use Odin\utils\collections\ArrayList;
+    use Odin\utils\Functions;
+
+    $arraylist = new ArrayList(Usuario::class);
+
+    $arraylist->add(new Usuario());
+
+    Functions::debug($arraylist->get(0));
+
+#### Dictionary
+O Dictionary é uma estrutura de chave-valor, ou seja, é necessário informar uma chave do tipo `string` e um valor sendo um objeto, como se fosse um array com chaves não-numericas, como no exemplo abaixo:
+
+    $array = [
+        "nome" => "Odin"
+        "tipo" => "Framework"
+    ];
+Usando o Dictionary:
+
+    use App\classes\Usuario;
+    use Odin\utils\collections\Dictionary;
+
+    $dictionary = new Dictionary("string", Usuario::class);
+    $dictionary->add("user1", new Usuario());
+    $dictionary->add("user2", new Usuario());
+
+    echo $dictionary->toJson();
+ 
+ #### Queue
+ A Queue é uma fila, ou seja, o primeiro elemento a ser inserido será o primeiro a sair, não há como recuperar um elemento de um determinado índice ou por chave, sempre será de forma ascendente ou descendente.
+
+    use App\classes\Animal;
+    use Odin\utils\collections\Queue;
+
+    $queue = new Queue(Animal::class);
+
+    $queue->add(new Animal("Bolt"));
+    $queue->add(new Animal("Max"));
+
+    \Odin\utils\Functions::debug($queue->peek());
 
