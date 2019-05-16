@@ -57,6 +57,11 @@ class ArrayList
         return $this->list[$index];
     }
     
+    public function getType()
+    {
+        return $this->type;
+    }
+    
     public function isEmpty(): bool
     {
         return empty($this->list);
