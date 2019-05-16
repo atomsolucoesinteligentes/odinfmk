@@ -23,6 +23,12 @@ class Adapter implements IDatabase
         $this->connection = new \PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}", $this->driver->USERNAME, $this->driver->PASSWORD);
         return !empty($this->connection);
     }
+    
+    public function setConnection(\Odin\database\orm\Connection $connection)
+    {
+        $this->connection = new \PDO("{$connection->getDriver()}:host={$connection->getHost()};port={$connection->getPort()};dbname={$connection->getSchema()}", $connection->getUsername(), $connection->getPassword());
+        return !empty($this->connection);
+    }
 
     public function disconnect()
     {

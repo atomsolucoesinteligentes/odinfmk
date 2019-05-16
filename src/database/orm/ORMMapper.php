@@ -34,6 +34,11 @@ class ORMMapper implements IMapper
         }
         $this->loadClassProperties();
     }
+    
+    public function setConnection(\Odin\database\orm\Connection $connection)
+    {
+        $this->_adapter->setConnection($connection);
+    }
 
     /**
      * @return object
