@@ -1,8 +1,8 @@
 <?php
 
-namespace Odin\database\orm;
+namespace Freya\orm;
 
-class Connection 
+class Connection
 {
     private $driver;
     private $host;
@@ -10,8 +10,8 @@ class Connection
     private $username;
     private $password;
     private $port;
-    
-    public function __construct(string $driver, string $host, string $schema, string $username, string $password, int $port) 
+
+    public function __construct(string $driver, string $host, string $schema, string $username, string $password, int $port)
     {
         $this->setDriver($driver);
         $this->setHost($host);
@@ -20,63 +20,63 @@ class Connection
         $this->setPassword($password);
         $this->setPort($port);
     }
-    
-    public function getDriver() 
+
+    public function getDriver()
     {
         return $this->driver;
     }
 
-    public function getHost() 
+    public function getHost()
     {
         return $this->host;
     }
 
-    public function getSchema() 
+    public function getSchema()
     {
         return $this->schema;
     }
 
-    public function getUsername() 
+    public function getUsername()
     {
         return $this->username;
     }
 
-    public function getPassword() 
+    public function getPassword()
     {
         return $this->password;
     }
 
-    public function getPort() 
+    public function getPort()
     {
         return $this->port;
     }
 
-    public function setDriver($driver) 
+    public function setDriver($driver)
     {
         $this->driver = $driver;
     }
 
-    public function setHost($host) 
+    public function setHost($host)
     {
         $this->host = $host;
     }
 
-    public function setSchema($schema) 
+    public function setSchema($schema)
     {
         $this->schema = $schema;
     }
 
-    public function setUsername($username) 
+    public function setUsername($username)
     {
         $this->username = $username;
     }
 
-    public function setPassword($password) 
+    public function setPassword($password)
     {
         $this->password = $password;
     }
 
-    public function setPort($port) 
+    public function setPort($port)
     {
         $this->port = $port;
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Odin\database\orm;
+namespace Freya\orm;
 
 use \PDO;
-use Odin\database\orm\IDatabase;
+use Freya\orm\IDatabase;
 use Odin\utils\Parse;
 
 class Adapter implements IDatabase
@@ -23,8 +23,8 @@ class Adapter implements IDatabase
         $this->connection = new \PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}", $this->driver->USERNAME, $this->driver->PASSWORD);
         return !empty($this->connection);
     }
-    
-    public function setConnection(\Odin\database\orm\Connection $connection)
+
+    public function setConnection(\Freya\orm\Connection $connection)
     {
         $this->connection = new \PDO("{$connection->getDriver()}:host={$connection->getHost()};port={$connection->getPort()};dbname={$connection->getSchema()}", $connection->getUsername(), $connection->getPassword());
         return !empty($this->connection);

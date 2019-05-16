@@ -1,8 +1,8 @@
 <?php
 
-namespace Odin\database\orm;
+namespace Freya\orm;
 
-use Odin\database\orm\ORMMapper;
+use Freya\orm\ORMMapper;
 
 class Collection
 {

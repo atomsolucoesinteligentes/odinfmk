@@ -1,9 +1,9 @@
 <?php
 
-namespace Odin\database\orm;
+namespace Freya\orm;
 
 use Odin\utils\Errors;
-use Odin\database\orm\{Adapter, IMapper, Collection};
+use Freya\orm\{Adapter, IMapper, Collection};
 
 class ORMMapper implements IMapper
 {
@@ -37,7 +37,7 @@ class ORMMapper implements IMapper
             $this->loadClassProperties();
         }
     }
-    
+
     public function setConnection(\Odin\database\orm\Connection $connection)
     {
         $this->_adapter->setConnection($connection);
@@ -266,7 +266,7 @@ class ORMMapper implements IMapper
         }
         return $this->_adapter->insert($this->_tableName, (array)$this);
     }
-    
+
     public function saveOn(\Odin\utils\collections\ArrayList $list)
     {
         if($list->getType() == Connection::class) {

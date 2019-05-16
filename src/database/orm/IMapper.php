@@ -1,6 +1,6 @@
 <?php
 
-namespace Odin\database\orm;
+namespace Freya\orm;
 
 interface IMapper
 {
