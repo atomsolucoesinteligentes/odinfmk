@@ -77,4 +77,9 @@ class ArrayList
     {
         return count($this->list);
     }
+    
+    public function slice(int $offset, int $length)
+    {
+        return array_slice($this->list, $offset, $length);
+    }
 }

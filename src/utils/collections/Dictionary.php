@@ -69,6 +69,11 @@ class Dictionary
         return count($this->dict);
     }
     
+    public function slice(int $offset, int $length)
+    {
+        return array_slice($this->dict, $offset, $length);
+    }
+    
     public function toJson()
     {
         return json_encode($this->dict, JSON_UNESCAPED_UNICODE);
