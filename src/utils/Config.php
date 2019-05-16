@@ -28,7 +28,8 @@ class Config
             die("Serial não informada");
 
         $root = ODIN_ROOT;
-        $envFile = "{$root}/{$projectFolder}/config/.env";
+        $file = (defined('ODIN_ENV') && ODIN_ENV == "dev") ? "dev.env" : ".env";
+        $envFile = "{$root}/{$projectFolder}/config/{$file}";
 
         if(file_exists($envFile)){
             self::$data = Parse::env($envFile, true);
