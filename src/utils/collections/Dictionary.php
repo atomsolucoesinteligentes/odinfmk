@@ -64,6 +64,11 @@ class Dictionary
         unset($this->dict[$key]);
     }
     
+    public function reverse(): array
+    {
+        return array_reverse($this->dict);
+    }
+    
     public function size(): int
     {
         return count($this->dict);

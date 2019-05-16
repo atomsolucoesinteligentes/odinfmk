@@ -67,6 +67,11 @@ class ArrayList
         unset($this->list[$index]);
     }
     
+    public function reverse(): array
+    {
+        return array_reverse($this->list);
+    }
+    
     public function set(int $index, object $element)
     {
         $this->checkType($element);
