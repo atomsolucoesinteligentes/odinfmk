@@ -131,17 +131,17 @@ class ORMMapper implements IMapper
         return $this;
     }
 
-//    public function and()
-//    {
-//        $this->_operatorsSequence[] = "AND";
-//        return $this;
-//    }
+   public function and()
+   {
+       $this->_operatorsSequence[] = "AND";
+       return $this;
+   }
 
-//    public function or()
-//    {
-//        $this->_operatorsSequence[] = "OR";
-//        return $this;
-//    }
+   public function or()
+   {
+       $this->_operatorsSequence[] = "OR";
+       return $this;
+   }
 
     public function innerJoin($tableJoin)
     {
