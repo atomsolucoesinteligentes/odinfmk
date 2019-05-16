@@ -2,6 +2,7 @@
 
 namespace Odin\database\orm;
 
+use Odin\utils\Errors;
 use Odin\database\orm\{Adapter, IMapper, Collection};
 
 class ORMMapper implements IMapper
@@ -25,14 +26,16 @@ class ORMMapper implements IMapper
 
     private $_limit = "";
 
-    public function __construct()
+    public function __construct(bool $autoconnect = true)
     {
         $this->_adapter = new Adapter();
-        if (!$this->_adapter->connect()) {
-            echo "Não foi possível conectar ao banco";
-            return;
+        if($autoconnect) {
+            if (!$this->_adapter->connect()) {
+                echo "Não foi possível conectar ao banco";
+                return;
+            }
+            $this->loadClassProperties();
         }
-        $this->loadClassProperties();
     }
     
     public function setConnection(\Odin\database\orm\Connection $connection)
@@ -128,17 +131,17 @@ class ORMMapper implements IMapper
         return $this;
     }
 
-    public function and()
-    {
-        $this->_operatorsSequence[] = "AND";
-        return $this;
-    }
+//    public function and()
+//    {
+//        $this->_operatorsSequence[] = "AND";
+//        return $this;
+//    }
 
-    public function or()
-    {
-        $this->_operatorsSequence[] = "OR";
-        return $this;
-    }
+//    public function or()
+//    {
+//        $this->_operatorsSequence[] = "OR";
+//        return $this;
+//    }
 
     public function innerJoin($tableJoin)
     {
@@ -262,6 +265,21 @@ class ORMMapper implements IMapper
             return $this->_adapter->update($this->_tableName, (array)$this, ['id' => ['=', $this->id, '']]);
         }
         return $this->_adapter->insert($this->_tableName, (array)$this);
+    }
+    
+    public function saveOn(\Odin\utils\collections\ArrayList $list)
+    {
+        if($list->getType() == Connection::class) {
+            $results = [];
+            foreach($list->all() as $key => $conn) {
+                $this->setConnection($conn);
+                $results[] = $this->_adapter->insert($this->_tableName, (array)$this);
+            }
+            return $results;
+        } else {
+            Errors::throwError("Tipo inválido", "O ArrayList deve ser do tipo " . Connection::class, "bug");
+            die();
+        }
     }
 
     public function loadClassProperties()
