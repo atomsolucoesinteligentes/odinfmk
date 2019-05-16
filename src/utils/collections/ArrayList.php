@@ -19,6 +19,11 @@ class ArrayList
         ($o instanceof $this->type) ? "" : die("Tipo inválido");
     }
     
+    public function all()
+    {
+        return $this->list;
+    }
+    
     public function add(object $o)
     {
         $this->checkType($o);
