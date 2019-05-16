@@ -12,6 +12,7 @@
     "autoload": {
         "psr-4": {
             "Odin\\": "src/",
+	    "Freya\\": "src/database/",
 	    "App\\": "teste/"
         }
     },
