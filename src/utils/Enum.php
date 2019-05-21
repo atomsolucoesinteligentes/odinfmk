@@ -2,7 +2,7 @@
 
 namespace Odin\utils;
 
-class Enum
+abstract class Enum
 {
     protected static $constCacheArray = [];
 
