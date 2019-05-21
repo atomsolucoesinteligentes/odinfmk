@@ -3,7 +3,7 @@
 namespace Freya\orm;
 
 use Odin\utils\Errors;
-use Freya\orm\{Adapter, IMapper, Collection};
+use Freya\orm\{Adapter, IMapper, Register};
 
 class ORMMapper implements IMapper
 {
@@ -49,7 +49,7 @@ class ORMMapper implements IMapper
     public function findAll()
     {
         $result = $this->_adapter->select($this->_tableName, '*', []);
-        return $this->generateCollection($result);
+        return $this->generateRegister($result);
     }
 
     /**
@@ -61,7 +61,7 @@ class ORMMapper implements IMapper
         $result = $this->_adapter->select($this->_tableName, '*', ['id' => ['=', $id, '']]);
         $result = $this->buildResponseObject($result);
         if ($result){
-            return $this->generateCollection($result[0]);
+            return $this->generateRegister($result[0]);
         }
         return (object)[];
     }
@@ -217,7 +217,7 @@ class ORMMapper implements IMapper
         $query = "SELECT {$columns} FROM {$this->_tableName} {$this->_tableAlias} {$joins} {$where} {$agreg} {$limit}";
         if($showSql) echo $query;
         $result = $this->_adapter->query($query);
-        return $this->generateCollection($result);
+        return $this->generateRegister($result);
     }
 
     protected function generateWS()
@@ -230,29 +230,29 @@ class ORMMapper implements IMapper
         return implode(" ", $whereString);
     }
 
-    protected function generateCollection($data)
+    protected function generateRegister($data)
     {
         if(is_array($data)){
             $result = [];
             foreach($data as $item)
             {
-                $collection = new Collection();
-                $collection->_tn = $this->_tableName;
+                $register = new Register();
+                $register->_tn = $this->_tableName;
                 foreach($item as $key => $value)
                 {
-                    $collection->{$key} = $value;
+                    $register->{$key} = $value;
                 }
-                $result[] = $collection;
+                $result[] = $register;
             }
             return $result;
         } else {
-            $collection = new Collection();
-            $collection->_tn = $this->_tableName;
+            $register = new Register();
+            $register->_tn = $this->_tableName;
             foreach($data as $key => $value)
             {
-                $collection->{$key} = $value;
+                $register->{$key} = $value;
             }
-            return $collection;
+            return $register;
         }
     }
 

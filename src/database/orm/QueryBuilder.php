@@ -5,7 +5,7 @@ namespace Freya\orm;
 use Odin\utils\Parse;
 use Odin\utils\Errors;
 use Odin\utils\Filter;
-use Freya\orm\Collection;
+use Freya\orm\Register;
 use Freya\orm\Connection;
 
 class QueryBuilder 
@@ -36,7 +36,7 @@ class QueryBuilder
         $query = Filter::clear(trim($this->query));
         $stmt = $this->connection->query($this->query);
         if (strpos($query, "SELECT") === 0) {
-            return $this->generateCollection($stmt->fetchAll(\PDO::FETCH_OBJ));
+            return $this->generateRegister($stmt->fetchAll(\PDO::FETCH_OBJ));
         } else {
             return $stmt;
         }
@@ -69,24 +69,24 @@ class QueryBuilder
         }
     }
 
-    protected function generateCollection($data) 
+    protected function generateRegister($data) 
     {
         if (is_array($data)) {
             $result = [];
             foreach ($data as $item) {
-                $collection = new Collection();
+                $register = new Register();
                 foreach ($item as $key => $value) {
-                    $collection->{$key} = $value;
+                    $register->{$key} = $value;
                 }
-                $result[] = $collection;
+                $result[] = $register;
             }
             return $result;
         } else {
-            $collection = new Collection();
+            $register = new Register();
             foreach ($data as $key => $value) {
-                $collection->{$key} = $value;
+                $register->{$key} = $value;
             }
-            return $collection;
+            return $register;
         }
     }
 
