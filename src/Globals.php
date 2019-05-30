@@ -17,7 +17,7 @@ class globals
             self::$container = AppContext::getInstance()->getContainer();
     }
 
-    protected function define()
+    protected static function define()
     {
         $asGlobal = [];
         foreach(self::$keys as $key)
