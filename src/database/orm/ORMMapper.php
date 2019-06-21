@@ -54,11 +54,12 @@ class ORMMapper implements IMapper
 
     /**
      * @param $id
+     * @param $keyName : Nome da coluna definida como Primary Key
      * @return object
      */
-    public function findById($id)
+    public function findById($id, $keyName = "id")
     {
-        $result = $this->_adapter->select($this->_tableName, '*', ['id' => ['=', $id, '']]);
+        $result = $this->_adapter->select($this->_tableName, '*', ["{$keyName}" => ['=', $id, '']]);
         $result = $this->buildResponseObject($result);
         if ($result){
             return $this->generateRegister($result[0]);
