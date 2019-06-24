@@ -63,6 +63,7 @@ class ORMMapper implements IMapper
 
     /**
      * @param $id
+     * @param $keyName : Nome da coluna definida como Primary Key
      * @return object
      */
     public function findById($id, $keyName = "id")
