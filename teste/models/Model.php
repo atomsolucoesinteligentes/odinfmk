@@ -6,11 +6,11 @@ use Freya\orm\ORMMapper;
 
 class Model extends ORMMapper
 {
-    private $tableName = "teste";
+    private $tableName = "quadros";
 
     public function __construct()
     {
-    	parent::__construct(false);
+    	parent::__construct();
     	parent::setTableName($this->tableName);
     }
 }

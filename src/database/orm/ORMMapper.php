@@ -53,12 +53,21 @@ class ORMMapper implements IMapper
     }
 
     /**
+     * @return object
+     */
+    public function findLast($keyName = "id")
+    {
+        $result = $this->_adapter->query("SELECT * FROM " . $this->_tableName . " ORDER BY {$keyName} DESC LIMIT 1");
+        return @reset($this->generateRegister($result));
+    }
+
+    /**
      * @param $id
      * @return object
      */
-    public function findById($id)
+    public function findById($id, $keyName = "id")
     {
-        $result = $this->_adapter->select($this->_tableName, '*', ['id' => ['=', $id, '']]);
+        $result = $this->_adapter->select($this->_tableName, '*', ["{$keyName}" => ['=', $id, '']]);
         $result = $this->buildResponseObject($result);
         if ($result){
             return $this->generateRegister($result[0]);
@@ -259,10 +268,10 @@ class ORMMapper implements IMapper
     /**
      * @return mixed
      */
-    public function save()
+    public function save($keyName = "id")
     {
-        if (isset($this->id)) {
-            return $this->_adapter->update($this->_tableName, (array)$this, ['id' => ['=', $this->id, '']]);
+        if (isset($this->{$keyName})) {
+            return $this->_adapter->update($this->_tableName, (array)$this, ["{$keyName}" => ['=', $this->{$keyName}, '']]);
         }
         return $this->_adapter->insert($this->_tableName, (array)$this);
     }

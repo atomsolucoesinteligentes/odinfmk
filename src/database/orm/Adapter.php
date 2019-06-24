@@ -20,8 +20,12 @@ class Adapter implements IDatabase
 
     public function connect()
     {
-        $this->connection = new \PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}", $this->driver->USERNAME, $this->driver->PASSWORD);
-        return !empty($this->connection);
+        try {
+            $this->connection = new PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}", $this->driver->USERNAME, $this->driver->PASSWORD);
+            return !empty($this->connection);
+        } catch(\PDOException $e) {
+            die($e->getMessage());
+        }
     }
 
     public function setConnection(\Freya\orm\Connection $connection)

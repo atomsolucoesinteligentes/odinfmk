@@ -11,13 +11,13 @@ class Register
         $this->{$key} = $value;
     }
 
-    public function remove($conditions = null)
+    public function remove($conditions = null, $keyName = "id")
     {
         $mapper = new ORMMapper();
         if($conditions){
             return $mapper->remove($this->_tn, $conditions);
         }else{
-            return $mapper->remove($this->_tn, ['id' => ['=', $this->id, '']]);
+            return $mapper->remove($this->_tn, ["{$keyName}" => ['=', $this->{$keyName}, '']]);
         }
     }
 }
