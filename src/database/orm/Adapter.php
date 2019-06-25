@@ -47,7 +47,7 @@ class Adapter implements IDatabase
      * @param array $values
      * @return mixed
      */
-    public function insert($tableName, $values)
+    public function insert($tableName, $values, $showSql = false)
     {
         $valuesstr = [];
         $columns = [];
@@ -60,6 +60,8 @@ class Adapter implements IDatabase
         $columns = implode(",", $columns);
         $valuesstr = implode(",", $valuesstr);
         $query = "INSERT INTO $tableName ($columns) VALUES ($valuesstr)";
+        if($showSql) echo $query;
+        
         return $this->connection->query($query);
     }
 
@@ -87,11 +89,13 @@ class Adapter implements IDatabase
      * @param array $values
      * @return mixed
      */
-    public function update($tableName, $values, $conditions)
+    public function update($tableName, $values, $conditions, $showSql = false)
     {
         $updateString = $this->generateUpdateString($values);
         $whereString = $this->generateWhereString($conditions);
         $query = "UPDATE $tableName SET $updateString WHERE $whereString";
+        if($showSql) echo $query;
+        
         $result = $this->connection->query($query);
         return $result;
     }

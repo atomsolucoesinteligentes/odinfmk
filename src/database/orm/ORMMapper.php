@@ -269,12 +269,12 @@ class ORMMapper implements IMapper
     /**
      * @return mixed
      */
-    public function save($keyName = "id")
+    public function save($keyName = "id", $showSql = false)
     {
         if (isset($this->{$keyName})) {
-            return $this->_adapter->update($this->_tableName, (array)$this, ["{$keyName}" => ['=', $this->{$keyName}, '']]);
+            return $this->_adapter->update($this->_tableName, (array)$this, ["{$keyName}" => ['=', $this->{$keyName}, '']], $showSql);
         }
-        return $this->_adapter->insert($this->_tableName, (array)$this);
+        return $this->_adapter->insert($this->_tableName, (array)$this, $showSql);
     }
 
     public function saveOn(\Odin\utils\collections\ArrayList $list)
