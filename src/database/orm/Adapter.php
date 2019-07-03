@@ -59,7 +59,7 @@ class Adapter implements IDatabase
         $columns = [];
         foreach(array_slice($values, 10) as $key => $value)
         {
-            $columns[] = $key;
+            $columns[] = "`{$key}`";
             $valuesstr[] = $this->typeFormat($value);
         }
 
