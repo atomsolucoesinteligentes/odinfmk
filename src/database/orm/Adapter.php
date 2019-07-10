@@ -59,7 +59,7 @@ class Adapter implements IDatabase
         $columns = [];
         foreach(array_slice($values, 10) as $key => $value)
         {
-            $columns[] = $key;
+            $columns[] = "`{$key}`";
             $valuesstr[] = $this->typeFormat($value);
         }
 
@@ -68,7 +68,10 @@ class Adapter implements IDatabase
         $query = "INSERT INTO $tableName ($columns) VALUES ($valuesstr)";
         if($showSql) echo $query;
         
-        return $this->connection->query($query);
+        $stmt = $this->connection->query($query);
+        $stmt->lastInsertedId = $this->getLastInserted();
+        
+        return $stmt;
     }
 
     public function typeFormat($value)
@@ -181,6 +184,10 @@ class Adapter implements IDatabase
             $buildString .= "`{$key}`" . $arrayValue[0] . $arrayValue[1] . " " . $arrayValue[2];
         }
         return $buildString;
+    }
+    
+    public function getLastInserted() {
+        return $this->connection->lastInsertId();
     }
 
     public function prepareResultQuery($tableName)
