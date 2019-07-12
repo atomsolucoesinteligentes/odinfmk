@@ -227,6 +227,7 @@ class ORMMapper implements IMapper
         $query = "SELECT {$columns} FROM {$this->_tableName} {$this->_tableAlias} {$joins} {$where} {$agreg} {$limit}";
         if($showSql) echo $query;
         $result = $this->_adapter->query($query);
+        $this->_whereStorage = [];
         return $this->generateRegister($result);
     }
 
@@ -237,6 +238,7 @@ class ORMMapper implements IMapper
         {
             $whereString[] = $item . " " . @(!empty($this->_operatorsSequence) ? $this->_operatorsSequence[$key] : "");
         }
+        
         return implode(" ", $whereString);
     }
 
@@ -284,6 +286,8 @@ class ORMMapper implements IMapper
             $where = "WHERE {$this->generateWS()}";
         }
         $query = "UPDATE {$this->_tableName} SET {$this->_adapter->generateUpdateString((array)$this)} {$where}";
+        $this->_whereStorage = [];
+        echo $query;
         return $this->_adapter->execute($query);
     }
 
