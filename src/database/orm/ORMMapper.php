@@ -16,7 +16,7 @@ class ORMMapper implements IMapper
 
     private $_whereStorage = [];
 
-    private $_operatorSequence = [];
+    private $_operatorsSequence = [];
 
     private $_joins = [];
 
@@ -228,6 +228,7 @@ class ORMMapper implements IMapper
         if($showSql) echo $query;
         $result = $this->_adapter->query($query);
         $this->_whereStorage = [];
+        $this->_operatorsSequence = [];
         return $this->generateRegister($result);
     }
 
@@ -287,6 +288,7 @@ class ORMMapper implements IMapper
         }
         $query = "UPDATE {$this->_tableName} SET {$this->_adapter->generateUpdateString((array)$this)} {$where}";
         $this->_whereStorage = [];
+        $this->_operatorsSequence = [];
         echo $query;
         return $this->_adapter->execute($query);
     }
