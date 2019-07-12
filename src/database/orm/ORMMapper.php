@@ -235,7 +235,7 @@ class ORMMapper implements IMapper
         $whereString = [];
         foreach($this->_whereStorage as $key => $item)
         {
-            $whereString[] = $this->_adapter->typeFormat($item) . " " . @(!empty($this->_operatorsSequence) ? $this->_operatorsSequence[$key] : "");
+            $whereString[] = $item . " " . @(!empty($this->_operatorsSequence) ? $this->_operatorsSequence[$key] : "");
         }
         return implode(" ", $whereString);
     }

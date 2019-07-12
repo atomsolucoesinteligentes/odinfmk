@@ -173,7 +173,7 @@ class Adapter implements IDatabase
     public function generateUpdateString($values)
     {
         $buildString = [];
-        $blacklist = ["_tableName", "_tableAlias", "_adapter", "_whereStorage", "_operatorSequence", "_joins", "_joinsOn", "_aggr", "_limit"];
+        $blacklist = ["_tableName", "_tableAlias", "_adapter", "_whereStorage", "_operatorsSequence", "_joins", "_joinsOn", "_aggr", "_limit"];
         foreach(array_slice($values, 10) as $key => $value)
         {
             if(!in_array($key, $blacklist)) {
@@ -183,7 +183,7 @@ class Adapter implements IDatabase
         return implode(", ", $buildString);
     }
 
-    /**
+    /**94875603
      * @param array $arrayValues
      * @return string
      */
