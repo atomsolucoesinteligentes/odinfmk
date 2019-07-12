@@ -98,7 +98,7 @@ class Adapter implements IDatabase
      * @param array $values
      * @return mixed
      */
-    public function update($tableName, $values, $conditions, $showSql = false)
+    public function update($tableName, $values, $conditions, $showSql = false) 
     {
         $updateString = $this->generateUpdateString($values);
         $whereString = $this->generateWhereString($conditions);
