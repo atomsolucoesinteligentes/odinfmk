@@ -166,9 +166,12 @@ class Adapter implements IDatabase
     public function generateUpdateString($values)
     {
         $buildString = [];
+        $blacklist = ["_tableName", "_tableAlias", "_adapter", "_whereStorage", "_operatorSequence", "_joins", "_joinsOn", "_aggr", "_limit"];
         foreach(array_slice($values, 10) as $key => $value)
         {
-            $buildString[] = "`{$key}` = {$this->typeFormat($value)}";
+            if(!in_array($key, $blacklist)) {
+                $buildString[] = "`{$key}` = {$this->typeFormat($value)}";
+            }
         }
         return implode(", ", $buildString);
     }
