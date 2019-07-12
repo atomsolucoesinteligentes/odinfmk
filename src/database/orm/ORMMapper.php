@@ -284,7 +284,7 @@ class ORMMapper implements IMapper
             $where = "WHERE {$this->generateWS()}";
         }
         $query = "UPDATE {$this->_tableName} SET {$this->_adapter->generateUpdateString((array)$this)} {$where}";
-        return $this->_adapter->query($query);
+        return $this->_adapter->execute($query);
     }
 
     public function saveOn(\Odin\utils\collections\ArrayList $list)

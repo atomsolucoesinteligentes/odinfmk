@@ -134,6 +134,13 @@ class Adapter implements IDatabase
         }
         return $response;
     }
+    
+    public function execute($sql) {
+        $stmt = $this->connection->prepare($sql);
+        $result = $stmt->execute();
+        return $result;
+        
+    }
 
     public function query($sql)
     {
