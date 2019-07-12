@@ -337,6 +337,4 @@ class ORMMapper implements IMapper
         if(!empty($alias))
             $this->_tableAlias = $alias;
     }
-    
-    //comment
 }
