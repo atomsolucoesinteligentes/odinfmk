@@ -57,10 +57,13 @@ class Adapter implements IDatabase
     {
         $valuesstr = [];
         $columns = [];
+        $blacklist = ["_tableName", "_tableAlias", "_adapter", "_whereStorage", "_operatorsSequence", "_joins", "_joinsOn", "_aggr", "_limit"];
         foreach(array_slice($values, 10) as $key => $value)
         {
-            $columns[] = "`{$key}`";
-            $valuesstr[] = $this->typeFormat($value);
+             if(!in_array($key, $blacklist)) {
+                $columns[] = "{$key}";
+                $valuesstr[] = $this->typeFormat($value);
+             }
         }
 
         $columns = implode(",", $columns);
