@@ -289,7 +289,20 @@ class ORMMapper implements IMapper
         $query = "UPDATE {$this->_tableName} SET {$this->_adapter->generateUpdateString((array)$this)} {$where}";
         $this->_whereStorage = [];
         $this->_operatorsSequence = [];
-        echo $query;
+//        echo $query;
+        return $this->_adapter->execute($query);
+    }
+    
+    public function delete() 
+    {
+        $where = "";
+        if(!empty($this->generateWS())){
+            $where = "WHERE {$this->generateWS()}";
+        }
+        $query = "DELETE FROM {$this->_tableName} {$where}";
+        $this->_whereStorage = [];
+        $this->_operatorsSequence = [];
+//        echo $query;
         return $this->_adapter->execute($query);
     }
 
