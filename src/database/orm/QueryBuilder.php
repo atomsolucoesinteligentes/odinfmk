@@ -54,12 +54,12 @@ class QueryBuilder
             $schema = $conn->getSchema();
             $username = $conn->getUsername();
             $password = $conn->getPassword();
-            $dbcString = "{$driver}:host={$host};port={$port};dbname={$schema}";
+            $dbcString = "{$driver}:host={$host};port={$port};dbname={$schema};charset=utf8";
         } else {
             $this->driver = Parse::env(ODIN_ROOT . "/" . SOURCE_DIR . "config/" . DRIVER . ".env", true);
             $username = $this->driver->USERNAME;
             $password = $this->driver->PASSWORD;
-            $dbcString = "{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}";
+            $dbcString = "{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA};charset=utf8";
         }
         
         try {

@@ -21,7 +21,7 @@ class Adapter implements IDatabase
     public function connect()
     {
         try {
-            $this->connection = new PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA}", $this->driver->USERNAME, $this->driver->PASSWORD);
+            $this->connection = new PDO("{$this->driver->DRIVER}:host={$this->driver->HOST};port={$this->driver->PORT};dbname={$this->driver->SCHEMA};charset=utf8", $this->driver->USERNAME, $this->driver->PASSWORD);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connection->exec("set names utf8");
             
@@ -33,7 +33,7 @@ class Adapter implements IDatabase
 
     public function setConnection(\Freya\orm\Connection $connection)
     {
-        $this->connection = new \PDO("{$connection->getDriver()}:host={$connection->getHost()};port={$connection->getPort()};dbname={$connection->getSchema()}", $connection->getUsername(), $connection->getPassword());
+        $this->connection = new \PDO("{$connection->getDriver()}:host={$connection->getHost()};port={$connection->getPort()};dbname={$connection->getSchema()};charset=utf8", $connection->getUsername(), $connection->getPassword());
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->connection->exec("set names utf8");
         
