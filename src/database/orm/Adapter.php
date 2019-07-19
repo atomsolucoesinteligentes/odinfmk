@@ -61,7 +61,7 @@ class Adapter implements IDatabase
         foreach(array_slice($values, 10) as $key => $value)
         {
              if(!in_array($key, $blacklist)) {
-                $columns[] = "{$key}";
+                $columns[] = "`{$key}`";
                 $valuesstr[] = $this->typeFormat($value);
              }
         }
