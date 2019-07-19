@@ -2,6 +2,7 @@
 
 /**
  * @author Edney Mesquita
+ * @version 1.7
  */
 namespace Odin;
 
