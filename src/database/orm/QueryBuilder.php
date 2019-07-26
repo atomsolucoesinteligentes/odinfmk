@@ -36,7 +36,7 @@ class QueryBuilder
         $query = Filter::clear(trim($this->query));
         $stmt = $this->connection->query($this->query);
         if (strpos($query, "SELECT") === 0) {
-            if(!$stmt) {
+            if($stmt) {
                 return $this->generateRegister($stmt->fetchAll(\PDO::FETCH_OBJ));
             }  
             return false;
