@@ -38,7 +38,7 @@ class QueryBuilder
         if (strpos($query, "SELECT") === 0) {
             if($stmt->rowCount > 0) {
                 return $this->generateRegister($stmt->fetchAll(\PDO::FETCH_OBJ));
-            }
+            }  
             return false;
         } else {
             return $stmt;
