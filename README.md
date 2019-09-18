@@ -96,10 +96,11 @@ A Ødin suporta 4 tipos de Requisições HTTP, sendo elas GET, POST, PUT e DELET
 Os controllers são Callables que são passados para as rotas para que alguma ação seja feita caso acessada. Você pode criar um controller para um rota de duas formas
 
 Forma funcional:
-
+```php
     Routes::get("/teste", function(){
         echo "Olá, Mundo!";
     })
+```
 Forma Orientada a Objetos:
 
     Routes::get("/teste", "App\http\controllers\Teste:olaMundo");
