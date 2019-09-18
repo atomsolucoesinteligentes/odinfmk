@@ -12,9 +12,10 @@ Instale a Ødin através do Composer.
 ## Iniciando um projeto
 
 Primeiramente você deve definir as constantes `ODIN_SERIAL` e `ODIN_ROOT` no arquivo de autoload do Composer (`vendor/autoload.php`).
-
+```php
     define("ODIN_SERIAL", "SUA_SERIAL");
     define("ODIN_ROOT", "/diretorio/raiz/do/projeto");
+```
 Em seguida, na raiz do seu projeto, você deve definir a estrutura base do projeto.
 
     config/
@@ -60,7 +61,7 @@ Antes de definir suas rotas você precisa configurar o `.htaccess` localizado na
 Você pode definir uma página para tratamento dos erros 403, que são lançados quando o usuário tenta acessar pastas proibidas. Por padrão, todas as pastas da aplicação têm o acesso proibido a abertura via HTTP.
 
 Após configurar o `.htaccess` você poderá definir suas rotas no arquivo `index.php`, como no exemplo a seguir.
-
+```php
     <?php
     //Incluindo o autoload do Composer
     require_once(dirname(dirname(__FILE__)) . "/vendor/autoload.php");
@@ -90,6 +91,7 @@ Após configurar o `.htaccess` você poderá definir suas rotas no arquivo `inde
 	});
 	
 	Routes::run();
+```
 A Ødin suporta 4 tipos de Requisições HTTP, sendo elas GET, POST, PUT e DELETE. Isso dá a você total facilidade e praticidade na hora de criar uma RESTful API.
 ## Controllers
 
