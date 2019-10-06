@@ -8,6 +8,11 @@ class FlashMessages
     private static $previous;
     private static $key = "_odinFlashMessages";
     private static $storage;
+    
+    public function __construct()
+    {
+        self::init();
+    }
 
     public static function init()
     {
